@@ -19,6 +19,6 @@ export async function posterPreset(id,kb,note=''){
  const reference=preset.reference?kb.photos.find(p=>p.file?.endsWith('/'+preset.reference)&&p.card===preset.card):null;
  const imagePath=reference?'https://123daved.github.io/qixia-spirit/assets/kb-photos/'+preset.reference:null;
  const intro=loaded.common.replace('{用户需求}',note||'无额外要求').replace('{景点名称}',preset.name).replace('{知识库检索片段及来源}',fact).replace('{参考图及其说明；没有则写“无”}',reference?`${reference.desc||reference.title}；来自知识库，照片 ${reference.author}，${reference.license}。`: '无；此景为艺术想象，不可声称为景点实景复原。');
- const composition='画面尺寸横向 3:2。第 1 张输入图是游客照片，必须保留人物身份和人数；如有第 2 张图片，它是该景点的环境参考。主景与人物在一幅连续的画面内自然结合。以景点为主、人物为较小的旅行者，景物丰富且布局清晰；顶部预留宽阔标题区，左侧留出简短故事文字位置。细节可直接融入风景，不要出现游客原照或参考照片的单独拼贴区。画面中不要生成任何文字、数字、标识或水印；由系统添加准确中文。';
+ const composition="画面尺寸横向 3:2。第 1 张输入图是游客照片，保留人物身份和人数；如有第 2 张图片，它是景点环境参考。生成一幅连续、无文字、无拼贴的旅行场景。最高优先级：每个人的头顶至下巴完整可见，面部及头部安全空间不被任何物体遮挡，不贴边，不裁切。多人合影逐人检查；空间不足时调整站位与构图，不得省略人物或挡脸。不要绘制标题区、故事框、空白卡片、半透明面板、细节拼贴、贴纸、水印或装饰边框；不要为左上角文字留空。景点故事、标题和来源由程序在整幅图片之外单独排版。";
  return {prompt:`${intro}\n\n${loaded.entries[preset.section]}\n\n${composition}`,imagePath,reference:reference?{author:reference.author,license:reference.license,source:reference.source}:null};
 }

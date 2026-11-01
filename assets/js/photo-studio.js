@@ -115,17 +115,33 @@ const stories={
  spring:{title:'栖霞山 · 山泉意境',card:'place-320113-qixiashan',text:'栖霞泉是产品中的虚拟意境，借水声与山林邀请你慢下来。这张行记记录的是一次想象中的相逢。',hint:'这一站，听听想象中的山水。'}
 };
 function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(Error('图片加载失败'));im.src=src})}
-function cover(ctx,img,x,y,w,h){const ratio=Math.max(w/img.width,h/img.height),sw=w/ratio,sh=h/ratio;ctx.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,x,y,w,h)}
+// Fit the entire generated image; no source cropping, including portrait/group photos.
+function contain(ctx,img,x,y,w,h){const ratio=Math.min(w/img.width,h/img.height),dw=img.width*ratio,dh=img.height*ratio;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
 function wrapped(ctx,text,x,y,maxWidth,lineHeight,maxLines=5){let line='',count=0;for(const ch of text){if(ctx.measureText(line+ch).width>maxWidth&&line){ctx.fillText(line,x,y+count*lineHeight);line=ch;if(++count>=maxLines)return}else line+=ch}if(line&&count<maxLines)ctx.fillText(line,x,y+count*lineHeight)}
 const headlines={lake:'把湖光留在这一页',stele:'一块碑，留住山中旧事',palace:'旧址上的山风',tea:'把山里的时间泡慢',cave:'石头藏着慢时光',stone:'山石有自己的时间',maple:'把一段秋色带回去',spring:'听山水说一段悄悄话'};
 async function buildMemoryPoster(job){
- const data=stories[job.spot]||stories.lake,art=await loadImage(job.image);const c=document.createElement('canvas');c.width=1800;c.height=1200;const g=c.getContext('2d');cover(g,art,0,0,1800,1200);
- // 文字由系统排版，避免模型生成错字；不重加照片拼贴区。
- g.fillStyle='rgba(249,244,228,.96)';g.fillRect(0,0,1800,202);g.fillStyle='#335747';g.font='bold 27px sans-serif';g.fillText('栖 霞 有 灵   ·   山 中 行 记',55,49);g.fillStyle='#b95239';g.font='bold 72px "Songti SC", "Microsoft YaHei", serif';g.fillText(headlines[job.spot]||headlines.lake,55,140,1280);g.fillStyle='#36594b';g.font='28px "Songti SC", serif';g.textAlign='right';g.fillText('栖霞山 · 到此一游',1740,146);g.textAlign='left';g.strokeStyle='#a5644e';g.lineWidth=3;g.beginPath();g.moveTo(55,175);g.lineTo(1745,175);g.stroke();
- g.fillStyle='rgba(250,246,233,.94)';g.fillRect(35,245,465,350);g.fillStyle='#b9573e';g.font='bold 34px "Songti SC", serif';g.fillText(data.title,60,300,400);g.fillStyle='#345346';g.font='27px "Songti SC", "Microsoft YaHei", serif';wrapped(g,data.text,60,350,410,43,4);g.fillStyle='#6c7e6c';g.font='24px "Songti SC", serif';wrapped(g,data.hint,60,535,410,34,2);
- g.fillStyle='rgba(248,244,231,.95)';g.fillRect(0,1100,1800,100);g.fillStyle='#3e5c4e';g.font='23px sans-serif';g.fillText('景点资料：qixia.winnielyu.com  ·  画面为 AI 艺术想象',45,1137,1700);g.font='18px sans-serif';if(job.reference){const credit='景点参考照片：'+(job.reference.author||'作者未注明')+' / '+(job.reference.license||'许可见原图')+' · '+(job.reference.source||'');g.fillText(credit,45,1171,1710)}return c.toDataURL('image/png');
+ const data=stories[job.spot]||stories.lake,art=await loadImage(job.image);
+ if(!art.width||!art.height)throw Error('海报图片尺寸无效');
+ // Text has its own paper area. The image rectangle is never painted over.
+ // Bound extreme aspect ratios while retaining every pixel with contain().
+ const imageTop=180,imageHeight=Math.max(480,Math.min(2400,Math.round(1800*art.height/art.width))),storyTop=imageTop+imageHeight;
+ const c=document.createElement('canvas');c.width=1800;c.height=storyTop+350;const g=c.getContext('2d');
+ g.fillStyle='#f9f4e4';g.fillRect(0,0,c.width,c.height);
+ contain(g,art,0,imageTop,1800,imageHeight);
+ g.fillStyle='#335747';g.font='bold 27px "Songti SC", "Microsoft YaHei", serif';g.fillText('栖 霞 有 灵   ·   山 中 行 记',55,45);
+ g.fillStyle='#b95239';g.font='bold 64px "Songti SC", "Microsoft YaHei", serif';g.fillText(headlines[job.spot]||headlines.lake,55,129,1660);
+ g.fillStyle='#36594b';g.font='24px "Songti SC", serif';g.textAlign='right';g.fillText('栖霞山 · 到此一游',1745,45);g.textAlign='left';
+ g.strokeStyle='#a5644e';g.lineWidth=2;g.beginPath();g.moveTo(55,158);g.lineTo(1745,158);g.stroke();
+ // Story and attribution are strictly below the image, for all eight scenes.
+ g.fillStyle='#b9573e';g.font='bold 34px "Songti SC", serif';g.fillText(data.title,55,storyTop+62,500);
+ g.fillStyle='#6c7e6c';g.font='26px "Songti SC", serif';wrapped(g,data.hint,55,storyTop+111,500,38,3);
+ g.fillStyle='#345346';g.font='28px "Songti SC", "Microsoft YaHei", serif';wrapped(g,data.text,620,storyTop+62,1120,43,4);
+ g.strokeStyle='#d4cbb4';g.lineWidth=1;g.beginPath();g.moveTo(55,storyTop+240);g.lineTo(1745,storyTop+240);g.stroke();
+ g.fillStyle='#3e5c4e';g.font='23px "Songti SC", "Microsoft YaHei", serif';g.fillText('景点资料：qixia.winnielyu.com  ·  画面为 AI 艺术想象',55,storyTop+280,1690);
+ g.font='18px "Songti SC", "Microsoft YaHei", serif';if(job.reference){const credit='景点参考照片：'+(job.reference.author||'作者未注明')+' / '+(job.reference.license||'许可见原图')+' · '+(job.reference.source||'');g.fillText(credit,55,storyTop+320,1690)}
+ return c.toDataURL('image/png');
 }
-async function showResult(){stopCamera();viewTicket++;cancelCameraView=null;if(root.hidden)lastFocus=document.activeElement;root.hidden=false;if(task?.status==='done'){content.innerHTML='<h2 id="photo-title">你的栖霞山中行记</h2><p>正在排版照片、景点资料与故事…</p><div class="photo-render" role="status"></div>';try{const poster=await buildMemoryPoster(task);content.innerHTML='<h2 id="photo-title">你的栖霞山中行记</h2><p>你的旅行故事已排成一张景点纪念海报。</p><img class="photo-result" alt="栖霞山旅行故事海报"><a class="photo-save" download="栖霞山到此一游.png">保存完整海报</a><p class="photo-privacy">海报中的旅行画面为 AI 艺术想象。</p>';content.querySelector('img').src=poster;content.querySelector('a').href=poster}catch(e){content.querySelector('.photo-render').textContent='海报排版暂时失败，请稍后重新点击查看。';console.error('海报排版失败',e)}}else{content.innerHTML='<h2 id="photo-title">旅行海报</h2><p class="photo-status"></p>';content.querySelector('.photo-status').textContent=task?.status==='error'?(task.error||'生成失败，请重新尝试。'):'海报正在生成，你可以继续游览。'}}
+async function showResult(){stopCamera();const view=++viewTicket;cancelCameraView=null;if(root.hidden)lastFocus=document.activeElement;root.hidden=false;if(task?.status==='done'){content.innerHTML='<h2 id="photo-title">你的栖霞山中行记</h2><p>正在排版照片、景点资料与故事…</p><div class="photo-render" role="status"></div>';try{const poster=await buildMemoryPoster(task);if(view!==viewTicket||root.hidden)return;content.innerHTML='<h2 id="photo-title">你的栖霞山中行记</h2><p>你的旅行故事已排成一张景点纪念海报。</p><img class="photo-result" alt="栖霞山旅行故事海报"><a class="photo-save" download="栖霞山到此一游.png">保存完整海报</a><p class="photo-privacy">海报中的旅行画面为 AI 艺术想象。</p>';content.querySelector('img').src=poster;content.querySelector('a').href=poster}catch(e){if(view!==viewTicket||root.hidden)return;content.querySelector('.photo-render').textContent='海报排版暂时失败，请稍后重新点击查看。';console.error('海报排版失败',e)}}else{content.innerHTML='<h2 id="photo-title">旅行海报</h2><p class="photo-status"></p>';content.querySelector('.photo-status').textContent=task?.status==='error'?(task.error||'生成失败，请重新尝试。'):'海报正在生成，你可以继续游览。'}}
 async function poll(){if(!task?.id)return;try{const r=await fetch('/api/poster?id='+encodeURIComponent(task.id),{cache:'no-store'}),j=await r.json();if(!r.ok)throw Error(j.error||'任务已失效');task={...task,...j};if(j.status==='pending'){pollTimer=setTimeout(poll,3000);return}if(j.status==='done'){badge.textContent='海报已生成 · 点击查看';q.toast('你的旅行海报已生成，点击右侧提醒查看');if(document.hidden&&window.Notification?.permission==='granted')new Notification('栖霞有灵',{body:'你的旅行海报已生成，回到页面查看。'})}else badge.textContent='海报生成失败 · 点击查看'}catch(e){task.status='error';task.error=e.message;badge.textContent='海报暂不可用 · 点击查看'}if(task.status==='error')try{localStorage.removeItem('qixia-poster-job')}catch{}}
 function startPoll(){clearTimeout(pollTimer);pollTimer=setTimeout(poll,1000)}
 badge.onclick=showResult;root.querySelector('.photo-close').onclick=close;root.onclick=e=>{if(e.target===root)close()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!root.hidden)close()});window.qixiaPhoto={open(p){if(root.hidden)lastFocus=document.activeElement;place=p;photo=null;show()}};try{const id=localStorage.getItem('qixia-poster-job');if(id){task={id,status:'pending'};badge.hidden=false;badge.textContent='正在查看海报进度';startPoll()}}catch{}
