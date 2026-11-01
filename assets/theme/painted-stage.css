@@ -1,0 +1,36 @@
+/* Raster artwork generated with GPT Image; no vector stand-ins for service art. */
+html:has(body.mountain-theme){height:auto;min-height:100%;overflow-y:auto}
+body.mountain-theme{height:auto;min-height:100dvh;overflow:visible}
+.mountain-theme #app{min-height:max(1040px,calc(min(100vw,620px) * 2.35));height:100dvh}
+.mountain-theme .sky{background:linear-gradient(180deg,#eff0e51a 0%,#eff0e54d 55%,#eeeee2b3 72%,#eeeee2 100%),url('painted/backdrop.webp') center top/100% auto no-repeat}
+.mountain-theme .theme-service{padding:4px 8px 12px;overflow:hidden;background:#fffcf1e8}
+.theme-painted-icon{display:block;object-fit:contain;pointer-events:none}
+.theme-service .theme-painted-icon{width:100%;height:72px;margin:0 0 7px;filter:drop-shadow(0 4px 3px #5c563513)}
+.theme-service strong{font-size:15px}.theme-service small{font-size:9px}
+.theme-book{min-height:52px;padding:0 12px 0 3px;gap:8px;background:linear-gradient(110deg,#e3cfac99,#faf5e8cc)}
+.theme-book .theme-painted-icon{width:63px;height:53px}
+.painted-stage{position:absolute;left:0;width:100%;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none}
+.painted-stage[hidden],.painted-tools[hidden]{display:none!important}.painted-stage:active{cursor:grabbing}
+.painted-plane{position:relative;flex:none;will-change:transform;transform-origin:center;--spot-scale:1}
+.painted-mountain{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 9px 8px #68734e25)}
+.painted-spots{position:absolute;inset:0;pointer-events:none}
+.painted-spot{position:absolute;transform:translate(-50%,-50%) scale(var(--spot-scale));pointer-events:auto;width:29px;height:29px;border:1px solid #ba8e60;border-radius:50%;background:#fff8e8;color:#864b33;font:16px Georgia;box-shadow:0 2px 5px #503f292b;display:grid;place-items:center;padding:0}
+.painted-spot:before{content:'';position:absolute;inset:-6px;border-radius:50%}.painted-spot:hover,.painted-spot:focus-visible{background:#b65e3c;color:#fff8e6}
+.art-view #scene,.art-view #labels{visibility:hidden;pointer-events:none}.art-view .compass,.art-view .hud,.art-view .layers{display:none!important}
+.scene-modes{position:absolute;left:20px;z-index:5;display:flex;align-items:center;gap:2px;border-bottom:1px solid #8f9c8052}
+.scene-modes button{padding:8px 9px;min-height:34px;background:#f8f7edbb;font:11px var(--serif);color:#7d8978;border-bottom:2px solid transparent}
+.scene-modes button[aria-pressed=true]{color:#9b5139;border-bottom-color:#b36242}
+.painted-tools{position:absolute;right:13px;z-index:5;display:flex;flex-direction:column;gap:9px}
+.painted-tools button{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid #fff7e9;background:#fbf8eeeb;font:20px Georgia;color:#50644f;box-shadow:0 3px 12px #5e634212}
+.painted-tools button:disabled{opacity:.45;cursor:default}
+.mountain-theme .guide-agent-launch{width:110px;height:157px;bottom:calc(var(--theme-dock-height,300px) + 47px);right:6px}
+.mountain-theme.selected .painted-tools,.mountain-theme.selected .scene-modes,.mountain-theme.riding .scene-modes{visibility:hidden;pointer-events:none}
+.mountain-theme.selected .painted-stage{pointer-events:none;filter:blur(2px);opacity:.55}
+/* The viewport can be taller than a short phone, so detail sheets stay in view. */
+.mountain-theme .panel,.mountain-theme .guide-agent-panel{position:fixed;max-height:78dvh;bottom:0;left:50%;right:auto;width:min(600px,calc(100vw - 20px));top:auto;margin-left:calc(max(-300px,(-100vw + 20px) / 2))}
+.mountain-theme #app{transform:none}
+.mountain-theme .ride-bar{position:fixed;left:max(10px,calc((100vw - 600px) / 2));right:max(10px,calc((100vw - 600px) / 2));bottom:max(14px,env(safe-area-inset-bottom))}
+@media(min-width:701px){.mountain-theme .guide-agent-panel{bottom:20px}.mountain-theme .panel{border-radius:18px 18px 0 0}}
+@media(max-width:430px){.theme-service .theme-painted-icon{height:65px;margin-bottom:4px}.theme-service strong{font-size:13px}.theme-service small{font-size:7px}.theme-book .theme-painted-icon{width:57px;height:50px}.mountain-theme .guide-agent-launch{width:96px;height:140px}.mountain-theme .intro{top:88px}.mountain-theme .intro h1{font-size:37px;line-height:1.2}.scene-modes{left:16px}}
+@media(max-width:360px){.theme-service .theme-painted-icon{height:56px}.theme-service strong{font-size:12px}.theme-service small{font-size:6.5px}.mountain-theme .intro h1{font-size:32px}.scene-modes button{font-size:10px}.painted-spot{width:26px;height:26px;font-size:14px}}
+@media(prefers-reduced-motion:reduce){.painted-plane{will-change:auto}}

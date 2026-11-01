@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#314b43"><title>栖霞有灵 · 司机端</title>
+<style>
+:root{--paper:#f3f0e8;--ink:#314b43;--muted:#829087;--red:#b5452f;--line:#42584b22}
+*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:var(--paper);color:var(--ink);font:15px -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;padding:max(24px,env(safe-area-inset-top)) 20px 32px}
+h1{font:600 24px 'Noto Serif SC',serif;letter-spacing:3px;margin:8px 0 4px}p{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 20px}
+label{display:block;font-size:13px;margin:16px 0 6px}input,select{width:100%;min-height:52px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:18px;color:var(--ink);letter-spacing:1px}
+button{width:100%;min-height:64px;margin-top:24px;border:0;border-radius:16px;background:var(--red);color:#fff;font-size:18px;letter-spacing:2px}button.on{background:var(--ink)}
+.status{margin-top:20px;padding:16px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:13px;line-height:1.9}.status b{font-size:15px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#bbb;margin-right:6px}.dot.on{background:#3f9a62;box-shadow:0 0 0 4px #3f9a6233}
+.warn{margin-top:16px;padding:12px 14px;border-radius:12px;background:#fbe9df;color:#8a3a26;font-size:13px;line-height:1.7}
+</style></head><body>
+<h1>观光车 · 司机端</h1>
+<p>开启后，本机定位每 3 秒上报一次。游客在「栖霞有灵」里输入车牌，就能看到这辆车真实开到了哪里。请保持此页在前台、屏幕常亮。</p>
+<label for="plate">车牌号</label><input id="plate" value="苏A·QX101" maxlength="16" autocomplete="off">
+<label for="line">运营线路</label><select id="line"></select>
+<button id="toggle">开始上报定位</button>
+<div class="status"><span class="dot" id="dot"></span><b id="st">未开始</b><br><span id="detail">—</span></div>
+<div class="warn" id="warn" hidden></div>
+<script src="assets/transit-config.js"></script>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s),TC=window.QIXIA_TRANSIT||{lines:[]};
+TC.lines.forEach(l=>$('#line').insertAdjacentHTML('beforeend',`<option value="${l.id}">${l.name} · ${l.short}</option>`));
+try{const s=JSON.parse(localStorage.getItem('qixia-driver')||'{}');if(s.plate)$('#plate').value=s.plate;if(s.line)$('#line').value=s.line}catch(e){}
+if(!window.isSecureContext){$('#warn').hidden=false;$('#warn').textContent='手机浏览器只允许在 HTTPS 页面获取定位。请在电脑上运行 sh tools/make-cert.sh 后重启服务，用终端打印的 https 地址打开本页。'}
+let watch=null,last=0,lock=null,sent=0,pending=null;
+async function send(p){const body={plate:$('#plate').value.trim(),line:$('#line').value,lat:p.coords.latitude,lng:p.coords.longitude,heading:p.coords.heading,speed:p.coords.speed,acc:p.coords.accuracy};
+ try{const r=await fetch('api/fleet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw Error((await r.json()).error||r.status);sent++;
+  $('#st').textContent='上报中';$('#detail').innerHTML=`${body.lat.toFixed(5)}, ${body.lng.toFixed(5)} · 精度 ±${Math.round(body.acc||0)} 米<br>已上报 ${sent} 次 · ${new Date().toLocaleTimeString()}`;}
+ catch(e){$('#st').textContent='上报失败，正在重试';$('#detail').textContent=e.message}}
+function onPos(p){pending=p;const t=Date.now();if(t-last>=3000){last=t;send(p)}}
+async function start(){if(!navigator.geolocation){alert('此浏览器不支持定位');return}localStorage.setItem('qixia-driver',JSON.stringify({plate:$('#plate').value.trim(),line:$('#line').value}));
+ watch=navigator.geolocation.watchPosition(onPos,e=>{$('#st').textContent='无法获取定位';$('#detail').textContent=e.code===1?'请在系统设置中允许此网页使用定位':e.message},{enableHighAccuracy:true,maximumAge:2000,timeout:15000});
+ try{lock=await navigator.wakeLock?.request('screen')}catch(e){}
+ $('#toggle').textContent='停止上报';$('#toggle').classList.add('on');$('#dot').classList.add('on');$('#st').textContent='等待定位…';$('#plate').disabled=$('#line').disabled=true}
+function stop(){navigator.geolocation.clearWatch(watch);watch=null;lock?.release?.();$('#toggle').textContent='开始上报定位';$('#toggle').classList.remove('on');$('#dot').classList.remove('on');$('#st').textContent='已停止';$('#plate').disabled=$('#line').disabled=false}
+$('#toggle').onclick=()=>watch==null?start():stop();
+setInterval(()=>{if(watch!=null&&pending&&Date.now()-last>=3000){last=Date.now();send(pending)}},3000);
+})();
+</script></body></html>

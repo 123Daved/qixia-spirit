@@ -1,0 +1,49 @@
+{
+  "generator": "GPT Image (built-in image_gen)",
+  "assets": {
+    "mountain": "assets/theme/painted/mountain.webp",
+    "backdrop": "assets/theme/painted/backdrop.webp",
+    "guide": "assets/theme/painted/guide.webp",
+    "map": "assets/theme/painted/map.webp",
+    "bus": "assets/theme/painted/bus.webp",
+    "rest": "assets/theme/painted/rest.webp",
+    "book": "assets/theme/painted/book.webp"
+  },
+  "prompts": [
+    [
+      "mountain",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate the CENTRAL MOUNTAIN AND RED MAPLE LEAF PLATFORM as one isolated full asset on a transparent background, portrait 4:5 composition. It must closely match the referenced central mountain: an asymmetric layered rocky forested mountain with natural vertical pale stone escarpments, a high central summit, several lower ridges, carefully scaled temple pavilions, meandering steps and paths, small blue-green lake, tiny arched bridge and delicate stream. A large realistically sculpted crimson-orange maple leaf supports the entire mountain; detailed vein texture, curling lobes and a stem extending toward lower right. Whole base and stem visible with a small clear margin. Mountain dominates, about 80% of image height, not a tiny mountain on an oversized leaf. Balanced green and orange tree groups with visible rock and paths; not overly dense. Perspective three-quarter elevated front view like the reference. Beautiful coherent light/shadows across the whole miniature. No people, numbered pins, scenic annotations or surrounding background hills. Transparent background outside the isolated mountain and leaf asset.",
+      true
+    ],
+    [
+      "backdrop",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a background environment plate for this app, portrait 9:16. Pale misty sage green mountains in the distance along upper right and outer left/right edges, cream hazy sky, calm softly illuminated atmospheric layering, subtle painted stones and softly mottled ground in foreground. Reserve the central 65% and upper left for UI and a separate mountain model: very pale and quiet with no high contrast objects there. No foreground mountain model, no leaf platform, no characters or buildings in foreground. Distant peaks gently shaped like the reference, not exaggerated sharp fantasy mountains. Full opaque background.",
+      false
+    ],
+    [
+      "guide",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a small service-entry illustration: an elegant folded cream-and-sage paper hiking map with delicate tiny mountain lines and paths, one additional small folded map leaning behind it, one natural burnt-orange maple leaf at its base. Three-quarter view, physically believable paper folds and soft shadow. Single centered composition fills 85% of a square canvas, transparent background. Not a flat line icon. No readable text.",
+      true
+    ],
+    [
+      "map",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a small service-entry illustration: a small three-dimensional terrain map tile with pale sage layered mountains, a few tiny dark green pines, an ivory path and a single terracotta location pin standing on the tile. Match the reference's scenic map icon. Single centered composition fills 85% of square canvas; transparent background. Refined miniature craftsmanship, no text.",
+      true
+    ],
+    [
+      "bus",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a small service-entry illustration: a charming but realistic miniature open-sided electric scenic shuttle bus with cream body, terracotta canopy roof and lower body panels, dark wheels, modest brown seats, thin roof supports, tiny steering wheel. Three-quarter view like the reference. It should look crafted and tasteful, not a flat icon or cartoon toy. Single centered composition fills 85% of square canvas; transparent background. No text, numbers or license plate.",
+      true
+    ],
+    [
+      "rest",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a small service-entry illustration: an elegant traditional Chinese resting pavilion with dark sage-gray curved tiled roof, warm wooden columns, ivory raised stone base and bench, next to a tiny tea table with a small celadon teapot and cups and one terracotta maple twig. Three-quarter miniature view matching the reference's bottom right service icon. Single coherent centered composition fills 85% of square canvas, transparent background. No text.",
+      true
+    ],
+    [
+      "book",
+      "Use the attached Qixia travel homepage as the STYLE REFERENCE. Match its exquisite, mature, richly detailed miniature landscape art: softly painted realistic stone, refined traditional Chinese architecture, sage evergreen trees, restrained terracotta autumn maple leaves, ivory stone paths, warm natural light. Premium sculpted collectible diorama with painterly finish, elegant Chinese cultural tourism art. Not low-poly geometry, not flat vector symbols, not plastic or childish cartoon. No text, letters, numbers, labels, UI, frames or watermark. Generate ONLY a small service-entry illustration: a slim traditional thread-bound ivory Chinese field guide booklet seen in three-quarter view, slightly open with a tiny scenic mountain watercolor on its cover, two natural burnt-orange maple leaves beside it. Refined paper texture, subtle thread binding, simple readable silhouette at small scale. Transparent background, centered square composition filling 85%. Absolutely no lettering or text on the cover.",
+      true
+    ]
+  ]
+}

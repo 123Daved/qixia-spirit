@@ -1,0 +1,30 @@
+/* Run with NODE_PATH pointing to a temporary jsdom installation. No live AI calls. */
+const {JSDOM}=require('jsdom');const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..');const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const source=read('栖霞有灵_3D白模原型.html');
+const dom=new JSDOM(source,{url:'http://localhost:8787/',runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window,d=w.document;const $=s=>d.querySelector(s);
+w.eval(source.slice(source.indexOf('const places='),source.indexOf('const $=')).replace('const places=','window.places='));
+const places=w.places;const requests=[];let rows=[],failCreate=false;
+w.fetch=async(url,opts)=>{const b=opts?.body?JSON.parse(opts.body):null;requests.push({url,b});let value={letters:[]},ok=true;if(url==='/api/letters/create'){if(failCreate){ok=false;value={error:'测试连接失败'}}else{const x={...b,id:String(rows.length+1),createdAt:new Date().toISOString(),status:b.visibility==='public'?'pending':'private'};rows.push(x);value=x}}else if(url==='/api/letters/mine')value={letters:rows};else if(url==='/api/letters/publish'){rows.find(x=>x.id===b.id).status='pending';value={ok:true,status:'pending'}}return {ok,json:async()=>value}};
+Object.assign(w,{$,state:{selected:null,visited:new Set(),memories:[]},T:{Vector3:class{constructor(x=0,y=0,z=0){Object.assign(this,{x,y,z})}}},controls:{},hush(){},persist(){},counts(){},crowdLine(){},burst(){},listen(){},askPhoto(){},VO:true,tags:['听水','访古','寻迹','问茶','观像','读石','拾秋','寻泉'],hooks:{afterSelect(){const b=d.createElement('button');b.id='bus-hint';b.innerHTML='<svg></svg><span>千佛岩站<br>查看线路，从附近站点上车</span>›';$('#crowd-line').after(b)}},qixiaReady:true});
+w.eval(source.slice(source.indexOf('function select(id'),source.indexOf('function closePanel()')));w.home=()=>{};
+const q=w.qixia={places,state:w.state,select:w.select,hooks:w.hooks,hush(){},speak:async()=>true,toast(){}};
+$('#destinations').innerHTML=places.map(p=>`<button class="destination" data-id="${p.id}"><span class="portrait-thumb"></span><strong></strong></button>`).join('');
+const stage=d.createElement('section');stage.className='painted-stage';stage.innerHTML='<div class="painted-plane"><img class="painted-mountain"><div class="painted-spots">'+places.map(p=>`<button class="painted-spot" data-place="${p.id}"></button>`).join('')+'</div></div>';$('#app').append(stage);
+const services=d.createElement('nav');services.className='theme-services';$('#app').append(services);const book=d.createElement('button');book.className='theme-book';$('#app').append(book);
+w.eval(read('assets/js/guides.js'));w.eval(read('assets/js/conversation.js'));w.eval(read('assets/js/letters.js'));w.eval(read('assets/theme/exploration.js'));
+const tick=()=>new Promise(r=>setTimeout(r,5));
+(async()=>{
+ for(const p of places){q.select(p.id);assert.equal($('#detail').dataset.place,p.id);assert.equal($('.guide-name strong').textContent,p.person.split(' · ')[0]);assert.equal($('.guide-encounter .portrait img').getAttribute('src'),p.character);assert.equal($('.scene-photo img').getAttribute('src'),w.QIXIA_GUIDES[p.id].photo);assert.equal($('.dialogue-form button').className,'dialogue-send');assert.equal(d.querySelectorAll('#detail .dialogue-photo').length,1);assert.equal(d.querySelectorAll('#detail #ask-photo').length,0);assert.equal(d.querySelectorAll('.question-suggestions button').length,2);assert.equal($('.painted-spot.active').dataset.place,p.id);assert.ok($('.quick-letter-form'));assert.equal(d.querySelectorAll('#detail .portrait').length,1);
+  w.openLetter(p);assert.equal($('.letter-breadcrumb select').value,p.id);assert.equal($('.letter-character').getAttribute('src'),p.character);assert.equal($('.postcard select').value,'private');assert.equal($('.postcard input[name=name]').value,'一位旅人');w.closeLetters();
+ }
+ q.select('stele');const input=$('.quick-letter-form input');input.value='雨后的苔痕很绿，记得慢一点走。';input.dispatchEvent(new w.Event('input'));$('.quick-letter-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await tick();assert.match($('.quick-letter-status').textContent,/已收入我的行记/);assert.equal(rows[0].visibility,'private');$('.quick-letter-status button').click();assert.match($('.letter-saved h1').textContent,/已收入我的行记/);$('.saved-actions .letter-primary').click();await tick();assert.equal(rows[0].status,'pending');assert.match($('.letter-saved .letter-status').textContent,/等待审核/);
+ await w.browseLetters('',true);assert.match($('.letter-library').textContent,/雨后的苔痕/);
+ w.openLetter(places[1]);let note=$('.postcard textarea');note.value='未保存的草稿';note.dispatchEvent(new w.Event('input'));w.openLetter(places[2]);w.openLetter(places[1]);assert.equal($('.postcard textarea').value,'未保存的草稿');
+ failCreate=true;$('.postcard').dispatchEvent(new w.Event('submit',{cancelable:true}));await tick();assert.match($('.letter-result').textContent,/测试连接失败/);assert.equal($('.postcard textarea').value,'未保存的草稿');assert.equal($('.postcard [type=submit]').disabled,false);
+ failCreate=false;$('.postcard').dispatchEvent(new w.Event('submit',{cancelable:true}));await tick();assert.match($('.letter-saved h1').textContent,/已收入我的行记/);
+ w.openLetter(places[1]);assert.equal($('.postcard textarea').value,'');$('.letter-dictate').click();assert.match($('.letter-voice-status').textContent,/暂不支持/);
+ // Untrusted notes are text nodes, never HTML.
+ rows.push({id:'x',spot:'stele',name:'<img src=x onerror=alert(1)>',note:'<script>alert(1)</script>',createdAt:new Date().toISOString(),status:'private'});await w.browseLetters('',true);assert.equal($('.letter-library').querySelectorAll('script,img').length,0);
+ console.log('PASS: 8 role compositions, actual photo mapping, unified composer, 8 postcards, private quick save, publish/read, per-place drafts, failure retry, speech fallback, untrusted text escaping.');w.closeConversation();dom.window.close();
+})().catch(e=>{console.error(e);dom.window.close();process.exitCode=1});

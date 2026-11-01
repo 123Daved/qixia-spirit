@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.data/
+certs/
+node_modules/
+.DS_Store
+__pycache__/
+.prototype-qa/
+*.zip

@@ -1,0 +1,100 @@
+/* 秋日手帐：手机全屏，内容滚动与输入区分离。 */
+#app .guide-agent-panel.autumn-guide{
+ --autumn-ink:#422e23;--autumn-rust:#b9552e;--autumn-muted:#847b68;--autumn-paper:#fbf3e4;
+ position:absolute;inset:0;z-index:30;width:100%;height:100%;max-height:none;min-height:0;border:0;border-radius:0;padding:0;
+ display:flex;flex-direction:column;overflow:hidden;isolation:isolate;color:var(--autumn-ink);
+ background:#fbf3e4 url('../guide-autumn/background.jpg') center top / cover no-repeat;
+ box-shadow:none;backdrop-filter:none;font-family:'PingFang SC','Microsoft YaHei',sans-serif;
+}
+#app .autumn-guide[hidden]{display:none}
+.autumn-guide svg{display:block;width:24px;height:24px;flex:none}
+.autumn-guide button{color:inherit;transition:background .18s,transform .18s}
+.autumn-guide button:active{transform:scale(.97)}
+.autumn-guide button:focus-visible,.autumn-guide summary:focus-visible{outline:2px solid var(--autumn-rust);outline-offset:3px}
+.autumn-guide .guide-topbar{display:flex;align-items:center;justify-content:space-between;flex:none;padding:max(10px,env(safe-area-inset-top)) 17px 0 23px;min-height:52px}
+.guide-topbar>span{display:flex;align-items:center;gap:9px;font:12px var(--serif);letter-spacing:2px;color:#8b6345}
+.guide-topbar i{font-style:normal}.guide-topbar b{display:block;width:32px;height:1px;background:#b7a48c;opacity:.6}
+.autumn-guide .guide-agent-close{position:static;display:grid;place-items:center;width:42px;height:42px;padding:9px;border-radius:50%;color:#664331;background:#fffbf033}
+.autumn-guide .guide-agent-close svg{width:26px;height:26px}
+.guide-scroll{min-height:0;flex:1;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#cfac8c transparent;padding-bottom:20px;scroll-behavior:smooth}
+.autumn-guide .guide-agent-head{padding:2px 26px 0;gap:20px;min-height:153px;align-items:center}
+.autumn-guide .guide-agent-portrait{width:130px;height:144px;border-radius:49% 49% 46% 46%;background:#e9e7d9;overflow:hidden;box-shadow:0 0 0 1px #fff9ee;flex:none;transform:rotate(-3deg)}
+.autumn-guide .guide-agent-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;transform:scale(1.2) translateY(10px) rotate(3deg)}
+.autumn-guide .guide-identity h2{font:500 43px/1.2 var(--serif);letter-spacing:3px;margin:0 0 11px;display:flex;align-items:center;gap:9px}
+.guide-identity h2 span{color:#c56536;transform:rotate(18deg)}
+.guide-identity h2 svg{width:28px;height:28px;fill:#c5653626}
+.autumn-guide .guide-identity p{margin:0;font:15px/1.7 var(--serif);color:var(--autumn-rust);letter-spacing:1px}
+.autumn-guide .guide-identity small{display:block;margin-top:9px;font-size:10px;letter-spacing:2px;color:#927961}
+.guide-greeting{font:500 25px/1.5 var(--serif);text-align:center;margin:13px 12px 21px;letter-spacing:1px}
+.autumn-guide .guide-agent-body{padding:0 21px}
+.guide-voice-ticket{display:flex;align-items:center;position:relative;gap:13px;padding:17px 17px;min-height:94px;border:1px solid #e6d7bf;background:#fffaf0de;box-shadow:0 6px 14px #92653012;border-radius:4px}
+.guide-voice-ticket:before,.guide-voice-ticket:after{content:'';position:absolute;top:calc(50% - 7px);width:13px;height:14px;background:var(--autumn-paper);border:1px solid #e6d7bf;border-radius:50%}
+.guide-voice-ticket:before{left:-8px;border-left-color:transparent}.guide-voice-ticket:after{right:-8px;border-right-color:transparent}
+.autumn-guide .guide-voice-play{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--autumn-rust);color:#fff9ec;box-shadow:0 3px 6px #a94f271c;font-size:18px;padding:0}
+.guide-play-symbol{line-height:1;margin-left:2px}
+.guide-voice-content{flex:1;min-width:0}.guide-voice-content>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.guide-voice-title{font:600 15px var(--serif)}.guide-voice-time{font:11px sans-serif;color:#816951;font-variant-numeric:tabular-nums}
+.guide-wave{display:flex;align-items:center;gap:3px;height:24px;margin:5px 0 1px;overflow:hidden;--progress:0%;background:linear-gradient(90deg,#b9552e var(--progress),#dfa078 var(--progress));background-clip:text}
+.guide-wave i{height:calc(var(--wave)*.65);width:3px;flex:1;max-width:4px;min-width:2px;border-radius:4px;background:#d6956c;opacity:.65}
+.welcoming .guide-wave i{background:#b9552e;animation:autumn-wave .8s var(--delay) ease-in-out infinite alternate;opacity:1}
+@keyframes autumn-wave{to{transform:scaleY(.35);opacity:.55}}
+.guide-voice-content p{font-size:10px;color:#8e806b;margin:2px 0 0;letter-spacing:.3px}
+.guide-voice-ticket>svg{width:22px;height:22px;color:#ca744a;transform:rotate(25deg);fill:#ca744a22}
+.guide-transcript{font-size:11px;color:#927b63;margin:8px 2px 14px}
+.guide-transcript summary{cursor:pointer;width:max-content;line-height:1.8}
+.guide-transcript p{font-size:12px;line-height:1.9;color:#665642;padding:9px 12px;background:#fff9efc9;border-radius:8px;margin:7px 0 0}
+.autumn-guide .guide-welcome-status{font-size:11px;line-height:1.6;color:#aa5a36;margin:7px 0 10px}
+.autumn-guide .guide-welcome-status:empty{display:none}
+.autumn-guide.welcoming .guide-agent-portrait{box-shadow:0 0 0 3px #f9eddb,0 0 0 4px #c27b4e55}
+.autumn-guide .guide-agent-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:2px}
+.autumn-guide .guide-agent-quick button{display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #dabd9c;background:#fff9efd9;border-radius:15px;padding:13px 6px;min-height:70px;text-align:left;box-shadow:0 3px 7px #8c5a2a05}
+.autumn-guide .guide-agent-quick svg{width:26px;height:26px;color:var(--autumn-rust)}
+.guide-agent-quick span{min-width:0}.guide-agent-quick strong{display:block;font-size:12px;font-weight:600;white-space:nowrap}.guide-agent-quick small{display:block;margin-top:5px;font-size:8px;color:#8e806e;white-space:nowrap;letter-spacing:-.15px}
+.guide-chat-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0 18px;font-size:10px;letter-spacing:1px;color:#9c8e7b}
+.guide-chat-divider:before,.guide-chat-divider:after{content:'';width:30px;height:1px;background:#b6a48c55}
+.autumn-guide .dialogue{border:0;background:none;box-shadow:none;padding:0;margin:0}
+.autumn-guide .dialogue-title{display:none}
+.autumn-guide .dialogue-messages{max-height:none;overflow:visible;margin:0;gap:20px;user-select:text;-webkit-user-select:text}
+.autumn-guide .dialogue-message{position:relative;max-width:calc(100% - 45px);margin:0 0 0 43px;padding:13px 15px;border-radius:3px 18px 18px 18px;background:#fffaf2f2;box-shadow:0 2px 14px #99724507;color:#443629;font:14px/1.85 'PingFang SC','Microsoft YaHei',sans-serif;overflow-wrap:anywhere}
+.autumn-guide .dialogue-message.assistant:before{content:'';position:absolute;left:-43px;top:0;width:33px;height:36px;border:1px solid #fff9ef;border-radius:50%;background:#e7e4d8 url('../characters/xiaoxia-guide.png') center 8% / 44px auto no-repeat}
+.autumn-guide .dialogue-message.user{align-self:flex-end;margin-left:24px;background:#efc5a7ef;border-radius:18px 3px 18px 18px;color:#4b3020}
+.autumn-guide .dialogue-message img{display:block;max-width:min(225px,100%);max-height:240px;width:auto;height:auto;object-fit:contain;border:5px solid #fffbf3;border-radius:3px;box-shadow:0 3px 8px #603c2517;margin:0 0 9px}
+.autumn-guide .dialogue-message.assistant span:empty:after{content:'小霞正在想一想…';color:#9c856d;font-size:12px}
+.autumn-guide .guide-agent-suggestions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:17px 0 0 43px}
+.autumn-guide .guide-scenic-card{padding:0;border-radius:11px;overflow:hidden;background:#fff9efeb;box-shadow:0 4px 12px #936a3710;min-height:0;text-align:left}
+.guide-scenic-card img{display:block;width:100%;height:68px;object-fit:cover}
+.guide-scenic-card>span:last-child{display:block;padding:8px 7px;font-size:11px;white-space:nowrap}
+.guide-card-icon{display:grid;place-items:center;height:68px;background:#f0e1c9;color:var(--autumn-rust)}
+.autumn-guide .guide-text-link{grid-column:1/-1;background:#f5e8d5;border:1px solid #e2cbb0;color:#a25430;font-size:12px}
+.guide-composer-dock{position:relative;flex:none;z-index:2;padding:13px 13px max(9px,env(safe-area-inset-bottom));background:linear-gradient(0deg,#fbf3e4 65%,#fbf3e4e8 89%,#fbf3e400);}
+.autumn-guide .dialogue-composer{padding:0;background:none}
+.autumn-guide .dialogue-form{display:flex;align-items:center;gap:3px;margin:0;padding:6px;background:#fffcf7;border:1px solid #e5d9c6;border-radius:32px;box-shadow:0 5px 20px #78532b0d}
+.autumn-guide .dialogue-form input{font-size:16px;min-width:0;width:0;flex:1;border:0;border-radius:0;background:transparent;padding:7px 4px;min-height:40px;outline-offset:0;color:#4f3929}
+.autumn-guide .dialogue-form input::placeholder{color:#a39583;font-size:12px}
+.autumn-guide .dialogue-form button{flex:none;display:grid;place-items:center;width:38px;height:40px;min-height:40px;background:none;color:#756b54;border:0;padding:9px;border-radius:50%}
+.autumn-guide .dialogue-form button[type=submit]{width:43px;height:43px;background:var(--autumn-rust);color:#fff9ef;margin-left:3px}
+.autumn-guide .dialogue-form .dialogue-mic{background:#e8ecdf;color:#66735b;width:36px;height:36px;min-height:36px}
+.autumn-guide .dialogue-form svg{width:21px;height:21px}
+.autumn-guide .dialogue-form .dialogue-photo{border-right:1px solid #e3d9c8;border-radius:0;padding-right:8px}
+.autumn-guide .dialogue-status{font-size:11px;color:#975b37;line-height:1.5;margin:0 6px 7px}
+.autumn-guide .dialogue-status:empty{display:none}
+.autumn-guide .dialogue-actions{margin:0;justify-content:center}
+.autumn-guide .dialogue-actions .dialogue-stop:not([hidden]){background:#f6e1cf;border:1px solid #dbb395;min-height:32px;font-size:11px;margin:7px 0 0;padding:5px 14px;color:#9d4e2a}
+.autumn-guide .dialogue-actions button[hidden]{display:none}
+.autumn-guide .dialogue-note{display:none}
+.autumn-guide .dialogue-attachment{margin:0 4px 8px;padding:7px;background:#fff9ef;border-color:#e4cfb4}
+.autumn-guide .dialogue-attachment img{width:44px;height:44px}
+.autumn-guide .dialogue-attachment strong{color:#8f532e}
+.guide-service-note{font-size:9px;text-align:center;color:#948672;margin:9px 0 0;line-height:1.65}
+.guide-service-note summary{cursor:pointer;list-style:none;outline-offset:2px}.guide-service-note summary::-webkit-details-marker{display:none}.guide-service-note summary:before{content:'ⓘ';margin-right:5px}.guide-service-note summary span{color:#ab957a}
+.guide-service-note p{text-align:left;margin:8px 7px 0;font-size:11px;color:#776651}
+@media(max-width:375px){.autumn-guide .guide-agent-head{padding:0 20px;gap:14px;min-height:135px}.autumn-guide .guide-agent-portrait{width:110px;height:125px}.autumn-guide .guide-identity h2{font-size:37px}.autumn-guide .guide-identity p{font-size:13px}.guide-greeting{font-size:23px;margin:11px 0 18px}.autumn-guide .guide-agent-body{padding:0 15px}.autumn-guide .guide-agent-quick button{gap:5px;padding:11px 4px}.autumn-guide .guide-agent-quick svg{width:23px}.guide-agent-quick strong{font-size:11px}.guide-agent-quick small{font-size:7px}.guide-voice-ticket>svg{display:none}.autumn-guide .dialogue-form input::placeholder{font-size:11px}}
+@media(max-height:680px){.autumn-guide .guide-agent-head{min-height:122px}.autumn-guide .guide-agent-portrait{width:105px;height:115px}.guide-greeting{font-size:23px;margin:8px 0 15px}.guide-voice-ticket{min-height:80px;padding-top:11px;padding-bottom:11px}.guide-chat-divider{margin:19px 0 14px}}
+@media(prefers-reduced-motion:reduce){.guide-scroll{scroll-behavior:auto}.welcoming .guide-wave i{animation:none}}
+/* 与山境地图、景点详情的新布局并存。 */
+html:has(body.guide-chat-open),body.guide-chat-open{overflow:hidden!important;height:100dvh!important}
+body.guide-chat-open #app{transform:none}
+#app .guide-agent-panel.autumn-guide{position:fixed;inset:0;margin:0 auto;width:100%;max-width:620px;height:100dvh;max-height:none}
+body.exploration #app>.guide-agent-launch{display:block!important;position:fixed;left:auto;right:18px;top:auto;bottom:22px;width:76px;height:112px;z-index:12}
+body.guide-chat-open #app>.guide-agent-launch{visibility:hidden}
+@media(min-width:621px){#app .guide-agent-panel.autumn-guide{box-shadow:0 0 0 100vmax #39291d60,0 0 70px #3e2a1d24}.autumn-guide .guide-agent-head{padding:10px 50px 0;gap:28px}.autumn-guide .guide-agent-body{padding:0 32px}.autumn-guide .guide-agent-portrait{width:145px;height:155px}.guide-greeting{font-size:29px}.autumn-guide .guide-agent-quick button{min-height:76px}.guide-agent-quick strong{font-size:14px}.guide-agent-quick small{font-size:10px}.guide-scenic-card img{height:90px}.autumn-guide .dialogue-message{font-size:15px}}

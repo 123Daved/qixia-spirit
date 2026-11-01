@@ -1,0 +1,12 @@
+import {readFile} from 'node:fs/promises';
+import path from 'node:path';
+const origin='https://qixia.winnielyu.com';
+let cache=null, refreshing=false, checkedAt=0;
+async function refresh(){if(refreshing)return;refreshing=true;checkedAt=Date.now();try{const get=async p=>{const r=await fetch(origin+p,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error('offline');return r.json()};const [catalog,photos]=await Promise.all([get('/api/kb/cards'),get('/gallery.json')]);if(!Array.isArray(catalog.cards)||catalog.cards.length<10||!Array.isArray(photos))throw Error('invalid');let index=0;const cards=Array(catalog.cards.length);await Promise.all(Array.from({length:6},async()=>{while(index<catalog.cards.length){const i=index++,item=catalog.cards[i];try{cards[i]=await get('/api/kb/cards/'+encodeURIComponent(item.id))}catch{cards[i]=cache.cards.find(c=>c.id===item.id)||item}}}));cache={source:origin,updatedAt:new Date().toISOString(),cards,photos}}catch{}finally{refreshing=false}}
+export async function library(root){if(!cache){cache=JSON.parse(await readFile(path.join(root,'knowledge/qixia-public.json'),'utf8'))}if(Date.now()-checkedAt>6*3600000)void refresh();return cache}
+export function retrieve(kb,query,id){
+ const defaults={lake:'明镜湖',stele:'明征君碑',palace:'乾隆行宫遗址',tea:'陆羽茶庄 白乳泉',cave:'千佛岩',stone:'天开岩',maple:'红叶谷 枫岭',spring:'栖霞山'};
+ const q=String(query||'');const focus=defaults[id]||(id==='guide'&&/路线|行程|攻略|游览|怎么走|半日|一日/.test(q)?'栖霞山 明镜湖 栖霞寺 千佛岩 红叶谷':'');
+ const scored=kb.cards.filter(c=>['place','event','org'].includes(c.type)).map(c=>{const words=[c.title,...(c.aliases||[])].filter(Boolean);let score=0;for(const w of words){if(q.includes(w))score+=20+w.length;if(focus.includes(w)||w.includes(focus)&&focus.length>1)score+=7;for(let i=0;i<w.length-1;i++)if(q.includes(w.slice(i,i+2)))score+=1}for(const theme of c.themes||[])if(theme.length>=2&&q.includes(theme))score+=2;return {c,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,6);
+ return scored.map(({c})=>{const facts=Array.isArray(c.facts)?c.facts.filter(f=>f.value!==undefined).sort((a,b)=>('ABC'.indexOf(a.credibility||'C')-'ABC'.indexOf(b.credibility||'C'))).slice(0,16).map(f=>`${f.key}：${f.value}${f.unit||''}${f.as_of?'（资料时间 '+f.as_of+'）':''} [${f.credibility||'未分级'}]${f.source?' 来源 '+f.source:''}`).join('；'):'';return `【${c.title}】${c.summary||''}\n${facts}\n知识卡：${origin}/place.html?id=${encodeURIComponent(c.id)}；状态：${c.status||'未标注'}`}).join('\n\n');
+}

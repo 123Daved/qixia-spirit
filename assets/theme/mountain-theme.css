@@ -1,0 +1,60 @@
+/* 立体山境主题：仅负责首页布局，原有业务面板继续使用。 */
+body.mountain-theme{--paper:#eeeee2;--ink:#274a3c;--muted:#7d8978;--red:#b95b3d;--serif:'Songti SC','STSong','Noto Serif SC','SimSun',serif;background:#e3e5d8;overflow-y:auto}
+.mountain-theme #app{max-width:620px;min-height:800px;height:100dvh;background:#eeeee2}
+.mountain-theme .sky{background:linear-gradient(#e9ecdf66,#efeee199),url('misty-hills.png') center 30%/cover no-repeat}
+.mountain-theme .sky svg,.mountain-theme .sky:before,.mountain-theme .sky:after,.mountain-theme .grain,.mountain-theme .vertical,.mountain-theme .guide{display:none!important}
+.mountain-theme .top{padding:24px 24px 0;align-items:center;gap:10px}
+.mountain-theme .brand{gap:10px}.mountain-theme .seal{font-size:25px;padding:4px 8px;border-width:1.5px}
+.mountain-theme .brand strong{font-size:23px;letter-spacing:4px}.mountain-theme .brand small{font-size:6px;letter-spacing:1.5px}
+.mountain-theme .top-actions{gap:12px}.mountain-theme .top-actions button{font-size:11px;padding:0;background:none}
+.mountain-theme .top-actions .progress{display:none}
+.mountain-theme .intro{left:24px;top:100px;z-index:2}.mountain-theme .intro .eyebrow{display:none}
+.mountain-theme .intro h1{font:500 clamp(32px,6vw,46px)/1.25 var(--serif);letter-spacing:3px;margin:0 0 13px}
+.mountain-theme .intro p{font:12px/1.8 var(--serif);color:#627260;margin:0}
+.mountain-theme .hud{left:auto;right:20px;top:270px;bottom:auto;z-index:4;display:flex;flex-direction:column;gap:9px}
+.mountain-theme .hud button{width:40px;height:40px;background:#fffcf0e8;border:1px solid #ffffff85;box-shadow:0 4px 14px #5260440b;font-size:19px}
+.mountain-theme .hud svg{width:20px;height:20px}.mountain-theme .hud .hint{display:none}
+.mountain-theme .compass{right:20px;top:220px;width:40px;height:40px;z-index:4}
+.mountain-theme #wx-pill{position:absolute;right:22px;top:109px;z-index:3;display:flex;gap:6px;align-items:center;background:none;padding:0;max-width:145px;text-align:left;min-height:44px}
+.mountain-theme #wx-icon svg{width:26px;height:26px;color:#c48a44}.mountain-theme #wx-text{font:16px var(--serif)}
+.mountain-theme #wx-sub{font-size:8px;line-height:1.6;max-width:120px;margin-top:4px;letter-spacing:0}
+.mountain-theme .dock{left:20px;right:20px;bottom:max(17px,env(safe-area-inset-bottom));z-index:4}
+.mountain-theme .dock-title{margin:0 0 10px;align-items:center}.mountain-theme .dock-title strong{font:14px var(--serif);letter-spacing:2px}
+.mountain-theme .dock-title strong:before{content:'—';margin-right:9px;color:#a79d80}
+.mountain-theme .layers{gap:3px}.mountain-theme .layers button{min-height:28px;font-size:9px;padding:0 6px;background:none;border-color:#78877533;color:#637c6b}
+.mountain-theme .layers button[aria-pressed=true]{background:#fcf7e8;border-color:#b9aa8a;color:#985d41}
+.mountain-theme #destinations{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;overflow:visible;padding:0;margin:0 0 12px}
+.mountain-theme #destinations .destination{display:flex;flex-direction:column;align-items:center;position:relative;height:86px;min-width:0;padding:0;background:none;border:0;box-shadow:none;overflow:visible;text-align:center}
+.mountain-theme #destinations .destination .portrait-thumb{display:block;width:43px;height:43px;border-radius:50%;background:#f7efdb var(--img) no-repeat;background-size:82px auto;background-position:var(--pos);border:2px solid #fff8e9;box-shadow:0 0 0 1px #c39d68}
+.mountain-theme #destinations .destination .spot-number{font:11px Georgia;color:#ad5a3d;display:block;margin:6px 0 3px}
+.mountain-theme #destinations .destination strong{font:10px var(--serif);white-space:nowrap;margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.mountain-theme #destinations .destination.active .portrait-thumb{box-shadow:0 0 0 2px var(--red)}
+.mountain-theme #destinations .destination.visited:after{top:31px;right:0;width:12px;height:12px;background:#53735b;color:white;border-radius:50%;font-size:9px}
+.theme-book{width:100%;display:flex;align-items:center;gap:12px;min-height:43px;margin:0 0 10px;padding:8px 12px;border:1px solid #d9c8a973;background:linear-gradient(100deg,#e8dac0a8,#fffaf0c9);border-radius:8px;text-align:left}
+.theme-book svg{width:25px;height:25px;color:#a5744e}.theme-book strong{font:15px var(--serif)}.theme-book span{font-size:10px;color:#77816d;margin-left:auto}.theme-book b{font-weight:400}
+.theme-services{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.theme-service{min-width:0;background:#fffcf0de;border:1px solid #ffffff80;border-radius:11px;text-align:left;padding:9px 10px 10px;transition:background .2s,transform .2s}
+.theme-service:hover{background:#fffdf5;transform:translateY(-2px)}.theme-service svg{display:block;width:44px;height:36px;margin:0 0 6px;color:#b76b48}
+.theme-service strong{display:block;white-space:nowrap;font:14px var(--serif)}.theme-service small{display:block;white-space:nowrap;font-size:8px;color:#7b8978;margin-top:5px}
+.mountain-theme .travel-launch{display:none!important}
+.mountain-theme .guide-agent-launch{width:100px;height:140px;left:auto;right:12px;bottom:278px;z-index:6;filter:drop-shadow(0 4px 5px #64714b25)}
+.mountain-theme .guide-agent-launch:after{content:'•••  问小霞 ›';position:absolute;bottom:0;left:8px;right:0;padding:8px 0;background:#b96242;color:#fff9ed;border:1px solid #fff3dc;border-radius:25px;font-size:11px}
+.mountain-theme .guide-float-art{padding-bottom:13px}
+.mountain-theme .model-note{display:none}.theme-scene-note{position:absolute;bottom:282px;left:24px;color:#7f8d79;font-size:9px;pointer-events:none}
+.mountain-theme .spirit{width:32px;height:44px}.mountain-theme .spirit .float{width:26px;height:26px;left:3px;animation:none}
+.mountain-theme .spirit .float:before,.mountain-theme .spirit .mood{display:none!important}
+.mountain-theme .spirit .face{background:#fff8e7;border:1px solid #b78b59;box-shadow:0 2px 6px #4e4a2924;display:grid;place-items:center}
+.mountain-theme .spirit .face:after{content:attr(data-number);font:14px Georgia;color:#874c35}
+.mountain-theme .spirit .thread{top:26px;background:#cba57388}.mountain-theme .spirit .foot{width:5px;margin-left:-2px;box-shadow:none}
+.mountain-theme .rest-tag{font-size:9px;padding:3px 7px;border-radius:12px}.mountain-theme .rest-tag .rest-tag-icon{width:18px;height:18px;font-size:11px}
+.mountain-theme .peak-tag{display:none}.mountain-theme .panel{max-height:79dvh;z-index:10}.mountain-theme .guide-agent-panel{z-index:11;max-height:82dvh}
+.mountain-theme.selected .theme-scene-note,.mountain-theme.riding .theme-scene-note,.mountain-theme.selected .guide-agent-launch,.mountain-theme.riding .guide-agent-launch{opacity:0;pointer-events:none}
+.mountain-theme.riding #wx-pill,.mountain-theme.riding .compass{display:none}
+.theme-gate-link{background:none;color:#7a8976;font-size:9px;min-height:28px;display:block;margin:4px 0 0 auto;padding:0 2px}
+.mountain-theme .guide-agent-launch{bottom:calc(var(--theme-dock-height,270px) + 46px)}
+.mountain-theme .theme-scene-note{bottom:calc(var(--theme-dock-height,270px) + 25px)}
+@media(max-width:430px){.mountain-theme .top{padding:20px 17px 0}.mountain-theme .brand strong{font-size:20px;letter-spacing:2px}.mountain-theme .brand small{font-size:5px;letter-spacing:.7px}.mountain-theme .seal{font-size:22px}.mountain-theme .top-actions{gap:9px}.mountain-theme .top-actions button{font-size:10px}.mountain-theme .intro{left:20px;top:94px}.mountain-theme .intro h1{font-size:33px}.mountain-theme .intro p{font-size:10px}.mountain-theme #wx-pill{right:16px;top:104px;max-width:105px}.mountain-theme #wx-text{font-size:13px}.mountain-theme #wx-icon svg{width:22px}.mountain-theme #wx-sub{font-size:7px}.mountain-theme .dock{left:13px;right:13px}.mountain-theme #destinations{gap:3px}.mountain-theme #destinations .destination .portrait-thumb{width:36px;height:36px;background-size:72px auto}.mountain-theme #destinations .destination{height:77px}.mountain-theme #destinations .destination strong{font-size:9px}.theme-service{padding:8px}.theme-service strong{font-size:12px}.theme-service small{font-size:7px}.theme-book span{font-size:8px}.mountain-theme .guide-agent-launch{width:83px;height:120px;bottom:270px}.theme-scene-note{bottom:268px;font-size:8px}.mountain-theme .layers button{font-size:8px;padding:0 5px}.mountain-theme .hud{right:12px}.mountain-theme .compass{right:12px}}
+@media(max-width:360px){.mountain-theme .brand small{display:none}.mountain-theme .brand strong{font-size:17px}.mountain-theme .intro h1{font-size:29px}.mountain-theme .intro p{font-size:9px}.mountain-theme #destinations .destination .portrait-thumb{width:31px;height:31px;background-size:64px auto}.theme-service strong{font-size:11px}.theme-service small{font-size:6.5px}.theme-book strong{font-size:13px}.theme-book span{display:none}.mountain-theme .dock-title strong{font-size:12px}}
+/* Keep the draggable companion above, rather than on top of, the character row. */
+.mountain-theme .guide-agent-launch{bottom:calc(var(--theme-dock-height,270px) + 50px)}
+.mountain-theme .theme-scene-note{bottom:calc(var(--theme-dock-height,270px) + 26px)}
