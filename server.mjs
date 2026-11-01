@@ -112,6 +112,10 @@ function allowAI(req){const now=Date.now(),ip=req.socket.remoteAddress||'unknown
 async function handler(req, res) {
   try {
     const url=new URL(req.url,'http://localhost');
+    // This backend has real API credentials; old static-demo bookmarks open live mode.
+    if(req.method==='GET'&&url.searchParams.has('demo')&&(url.pathname==='/'||url.pathname.endsWith('.html'))){
+      url.searchParams.delete('demo');res.writeHead(302,{'Location':url.pathname+url.search,'Cache-Control':'no-store'});return res.end();
+    }
     if(url.pathname.startsWith('/api/review')){
       const ip=req.socket.remoteAddress||'';if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(ip)||! /^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(req.headers.host||'')){res.writeHead(403);return res.end()}
       if(req.headers.origin){let o;try{o=new URL(req.headers.origin)}catch{}if(!o||o.host!==req.headers.host){res.writeHead(403);return res.end()}}
@@ -185,9 +189,9 @@ async function handler(req, res) {
 }
 const lan = Object.values(networkInterfaces()).flat().filter(a => a?.family === 'IPv4' && !a.internal).map(a => a.address);
 const httpServer = http.createServer(handler);
-httpServer.listen(PORT, '0.0.0.0', () => {
+httpServer.listen(PORT, env.HOST || '0.0.0.0', () => {
   console.log(`栖霞有灵已启动：http://localhost:${PORT}`);
-  for (const ip of lan) console.log(`手机（同一 Wi-Fi）：http://${ip}:${PORT}`);
+  if(!env.HOST||env.HOST==='0.0.0.0')for (const ip of lan) console.log(`手机（同一 Wi-Fi）：http://${ip}:${PORT}`);
 });
 // 手机定位需要 HTTPS：先运行 sh tools/make-cert.sh 生成本机证书，司机端用 https 地址打开（首次需在手机上「继续访问」）
 const KEY = path.join(root, 'certs/key.pem'), CERT = path.join(root, 'certs/cert.pem'), HTTPS_PORT = +(env.HTTPS_PORT || 8443);

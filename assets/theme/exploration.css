@@ -38,3 +38,18 @@ html:has(body.exploration){height:100%;overflow:hidden}body.exploration{height:1
 .exploration .dock .theme-service img{display:block;width:100%;height:62px;object-fit:contain;margin:0 0 4px}
 .exploration .dock .theme-service strong{display:block;font:14px var(--serif);white-space:nowrap}
 .exploration .dock .theme-service small{display:block;font-size:8px;white-space:nowrap;margin-top:4px;color:#7b8978}
+
+/* Travel keepsake entry, between the scenic photo and its guide. */
+.exploration .travel-poster-card{display:flex;align-items:center;gap:12px;width:100%;min-height:78px;margin:12px 0 18px;padding:10px 12px;border:1px solid #dfe5d6;border-radius:12px;background:linear-gradient(105deg,#eef2e6,#f3f4e9);color:var(--ink);text-align:left;cursor:pointer;transition:background .18s,box-shadow .18s}
+.travel-poster-art{position:relative;display:grid;place-items:center;flex:0 0 78px;height:54px;pointer-events:none}
+.travel-poster-print{display:block;width:54px;height:52px;padding:3px 3px 7px;background:#fffef7;border-radius:3px;transform:rotate(-7deg);box-shadow:0 3px 7px #344b3229}
+.travel-poster-print img{display:block;width:100%;height:100%;object-fit:cover;border-radius:1px}
+.travel-poster-spark{position:absolute;right:0;top:4px;color:#c8bb58;font-size:20px}
+.travel-poster-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+.travel-poster-copy strong{font:600 16px/1.4 var(--serif)}
+.travel-poster-copy small{font-size:11px;line-height:1.5;color:#808879}
+.travel-poster-arrow{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:#3d704b;color:#fffdf4}
+.travel-poster-arrow svg{width:19px;height:19px}
+.exploration .travel-poster-card:hover{background:#e8eddf;box-shadow:0 3px 12px #344b3212}
+.exploration .travel-poster-card:focus-visible{outline:2px solid #3d704b;outline-offset:3px}
+@media(max-width:360px){.exploration .travel-poster-card{gap:8px;padding:10px}.travel-poster-art{flex-basis:58px}.travel-poster-print{width:44px;height:45px}.travel-poster-spark{font-size:15px;right:-2px}.travel-poster-copy strong{font-size:14px}.travel-poster-copy small{font-size:10px}.travel-poster-arrow{flex-basis:26px;height:26px}}

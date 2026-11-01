@@ -64,3 +64,10 @@ body.phone-app #app>.guide-agent-launch{bottom:200px}
  .phone-app.exploration #app .painted-tools{bottom:154px}
  body.phone-app #app>.guide-agent-launch{bottom:128px}
 }
+
+/* Keep Xiaoxia's introduction clear of the page header and portrait crop. */
+.phone-app #app .guide-agent-panel.autumn-guide{z-index:90}
+.phone-app .autumn-guide .guide-agent-head{padding-top:14px;padding-bottom:4px;min-height:166px}
+.phone-app .autumn-guide .guide-agent-portrait{transform:none}
+.phone-app .autumn-guide .guide-agent-portrait img{display:block;box-sizing:border-box;object-fit:cover;object-position:50% 0;transform:none;padding-top:9px}
+@media(orientation:landscape) and (max-height:520px){.phone-app .autumn-guide .guide-agent-head{padding-top:10px;min-height:112px}.phone-app .autumn-guide .guide-agent-portrait img{padding-top:6px}}

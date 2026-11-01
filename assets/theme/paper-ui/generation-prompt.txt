@@ -1,0 +1,9 @@
+Generated with built-in image_gen. Reference: approved 雅致宣纸 UI concept.
+Production illustration sprite sheet; six equal square tiles, 3 columns by 2 rows; no text or UI. Delicate restrained Chinese ink and watercolor on warm ivory rice paper #faf7ef, with generous ivory margins and watercolor fades.
+Top left: pale gray misty mountains for headers.
+Top center: tall gray mountain cliff, tiny pavilion, muted orange maple trees, right-side composition.
+Top right: traditional Chinese old town tiled roofs and red maple, right-side composition.
+Bottom left: ceramic teapot and cup on stone table, maple branch, right-side composition.
+Bottom center: illustrated postcards, bookmark and maple leaf.
+Bottom right: desaturated forest-green mountain landscape and pavilion, dark uncluttered left side for white banner text.
+No lettering, labels, people, frames or watermarks.

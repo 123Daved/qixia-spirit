@@ -1,5 +1,6 @@
 /* Public static demo: local journal and explicit boundaries for server-only features. */
 (()=>{
+ if(window.QIXIA_CLOUD_API)return;
  if(['localhost','127.0.0.1','::1'].includes(location.hostname)&&!new URLSearchParams(location.search).has('demo')&&!window.parent.QIXIA_STATIC_DEMO)return;
  window.QIXIA_STATIC_DEMO=true;
  const realFetch=window.fetch.bind(window),base=new URL('.',document.currentScript.src),key='qixia-public-demo-letters-v1';

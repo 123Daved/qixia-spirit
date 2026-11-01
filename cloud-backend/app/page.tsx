@@ -1,0 +1,1 @@
+export default function Page(){return <main style={{fontFamily:'serif',padding:'4rem',background:'#faf8f1',minHeight:'100vh',color:'#244b3d'}}><h1>栖霞有灵 · 云端服务</h1><p>真实对话、照片识别、语音、旅行海报与山中行记。</p><a href="https://123daved.github.io/qixia-spirit/">打开栖霞有灵 →</a></main>}
