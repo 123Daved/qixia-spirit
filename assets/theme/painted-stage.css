@@ -9,8 +9,8 @@ body.mountain-theme{height:auto;min-height:100dvh;overflow:visible}
 .theme-service strong{font-size:15px}.theme-service small{font-size:9px}
 .theme-book{min-height:52px;padding:0 12px 0 3px;gap:8px;background:linear-gradient(110deg,#e3cfac99,#faf5e8cc)}
 .theme-book .theme-painted-icon{width:63px;height:53px}
-.painted-stage{position:absolute;left:0;width:100%;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none}
-.painted-stage[hidden],.painted-tools[hidden]{display:none!important}.painted-stage:active{cursor:grabbing}
+.painted-stage{position:absolute;left:0;width:100%;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default;user-select:none;-webkit-user-select:none}
+.painted-stage[hidden],.painted-tools[hidden]{display:none!important}.painted-stage:active{cursor:default}
 .painted-plane{position:relative;flex:none;will-change:transform;transform-origin:center;--spot-scale:1}
 .painted-mountain{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 9px 8px #68734e25)}
 .painted-spots{position:absolute;inset:0;pointer-events:none}
