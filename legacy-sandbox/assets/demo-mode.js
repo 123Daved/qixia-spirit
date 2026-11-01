@@ -29,10 +29,4 @@
    }
   }catch{return json({error:'本机存储不可用或已满，请允许浏览器存储，或减少照片后重试。'},507)}
  };
- document.addEventListener('DOMContentLoaded',()=>{
-  const note=document.createElement('button');note.className='demo-info-button';note.textContent='演示版说明';note.type='button';
-  const dialog=document.createElement('dialog');dialog.className='demo-info';dialog.innerHTML='<h2>欢迎体验栖霞有灵</h2><p>画卷、3D 沙盘、八景故事、预录语音和游山指南可以直接体验。</p><p>山中来信仅保存在当前浏览器，清除浏览器数据后会丢失；不公开、不跨设备共享。</p><p>自由 AI 对话、图片识别、AI 海报和车辆实时定位需另行配置服务器，本演示站不提供。地图、客流和车次均为示意或估算，请以景区现场信息为准。</p><form method="dialog"><button>开始游山</button></form>';
-  note.onclick=()=>dialog.showModal();document.body.append(note,dialog);
-  const css=document.createElement('style');css.textContent='.demo-info-button{position:fixed;top:4px;left:50%;transform:translateX(-50%);z-index:120;padding:3px 8px;border:1px solid #87947c55;border-radius:12px;background:#faf6eded;color:#536452;font-size:9px}.demo-info{max-width:360px;width:calc(100% - 36px);padding:24px;border:1px solid #e4d9c6;border-radius:16px;background:#faf6ed;color:#314b43}.demo-info::backdrop{background:#243f3955}.demo-info p{font:13px/1.8 sans-serif}.demo-info h2{font:22px serif}.demo-info button{border:0;border-radius:20px;background:#314b43;color:white;padding:10px 18px}';document.head.append(css);
- });
 })();
